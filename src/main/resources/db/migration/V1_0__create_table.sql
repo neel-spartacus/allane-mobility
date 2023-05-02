@@ -1,0 +1,33 @@
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `contract`;
+DROP TABLE IF EXISTS `vehicle`;
+DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `contract_vehicle`;
+SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE vehicle (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  brand VARCHAR(100) NOT NULL,
+  model VARCHAR(100) NOT NULL,
+  model_year INTEGER,
+  price DECIMAL(8,2),
+  PRIMARY KEY (id)
+ );
+
+
+CREATE TABLE customer (
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   firstName VARCHAR(400) NOT NULL,
+   lastName VARCHAR(400) NOT NULL,
+   birthDate DATE,
+   PRIMARY KEY (id)
+  );
+
+
+CREATE TABLE contract (
+     contractNo BIGINT NOT NULL AUTO_INCREMENT,
+     monthlyRate DECIMAL(5,2) NOT NULL,
+     customer_id BIGINT NOT NULL,
+     PRIMARY KEY (contractNo),
+     CONSTRAINT FK_CONTRACT_CUSTOMER FOREIGN KEY(customer_id) REFERENCES customer(id)
+    );
