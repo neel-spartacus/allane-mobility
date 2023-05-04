@@ -39,6 +39,7 @@ public class Vehicle {
     private Integer modelYear;
 
 
+    @Column(name = "vin")
     private String vin;
 
     @NotNull

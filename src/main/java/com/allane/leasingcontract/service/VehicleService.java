@@ -41,18 +41,17 @@ public class VehicleService {
     }
 
 
-    public VehicleDto updateVehicle(long vehicleId, Vehicle vehicle) {
+    public VehicleDto updateVehicle(long vehicleId, VehicleDto vehicleDto) {
         Vehicle updatedVehicle = repository.findById(vehicleId)
                 .map(existingVehicle -> {
-                    existingVehicle.setModel(vehicle.getModel());
-                    existingVehicle.setBrand(vehicle.getBrand());
-                    existingVehicle.setVin(vehicle.getVin());
-                    existingVehicle.setContract(vehicle.getContract());
-                    existingVehicle.setModelYear(vehicle.getModelYear());
-                    existingVehicle.setPrice(vehicle.getPrice());
+                    existingVehicle.setModel(vehicleDto.getModel());
+                    existingVehicle.setBrand(vehicleDto.getBrand());
+                    existingVehicle.setVin(vehicleDto.getVin());
+                    existingVehicle.setModelYear(vehicleDto.getModelYear());
+                    existingVehicle.setPrice(vehicleDto.getPrice());
                     return repository.save(existingVehicle);
                 })
-                .orElseGet(() -> repository.save(vehicle));
+                .orElseGet(() -> repository.save(convertVehicleDtoToEntity(vehicleDto,modelMapper)));
         return convertVehicleEntityToDto(updatedVehicle, modelMapper);
     }
 }

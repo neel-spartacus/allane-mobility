@@ -46,8 +46,8 @@ public class LeasingContractController {
     }
 
     @PutMapping("contracts/{id}")
-    ResponseEntity updateContract(@PathVariable(name="id") @NotNull long contractId, @RequestBody @Valid ContractDto contract){
-        ContractDto updatedContract=leaseContractService.updateContract(contractId,contract);
+    ResponseEntity updateContract(@PathVariable(name="id") @NotNull long contractId, @RequestBody @Valid ContractDto contractDto){
+        ContractDto updatedContract=leaseContractService.updateContract(contractId,contractDto);
         return new ResponseEntity<>(updatedContract,HttpStatus.OK);
     }
 

@@ -11,6 +11,7 @@ CREATE TABLE vehicle (
   model VARCHAR(100) NOT NULL,
   model_year INTEGER,
   price DECIMAL(8,2),
+  vin VARCHAR(25) UNIQUE,
   PRIMARY KEY (id)
  );
 

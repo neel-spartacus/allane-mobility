@@ -3,14 +3,14 @@ package com.allane.leasingcontract.service;
 import com.allane.leasingcontract.dto.ContractDto;
 import com.allane.leasingcontract.model.Contract;
 import com.allane.leasingcontract.repository.ContractRepository;
+import com.allane.leasingcontract.utils.DtoEntityUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.allane.leasingcontract.utils.DtoEntityUtils.convertCustomerDtoToEntity;
-import static com.allane.leasingcontract.utils.DtoEntityUtils.convertVehicleDtoToEntity;
+import static com.allane.leasingcontract.utils.DtoEntityUtils.*;
 
 @Service
 public class LeaseContractService {
@@ -24,23 +24,16 @@ public class LeaseContractService {
     private ContractRepository repository;
 
     public void createContract(ContractDto contractDto) {
-        Contract contract = convertToEntity(contractDto);
+        Contract contract = convertContractDtoToEntity(contractDto,modelMapper);
         repository.save(contract);
     }
 
-    private Contract convertToEntity(ContractDto contractDto) {
-        return modelMapper.map(contractDto, Contract.class);
-    }
-
-    private ContractDto convertToDto(Contract contract) {
-        return modelMapper.map(contract, ContractDto.class);
-    }
 
     public ContractDto getContractById(long contractId) {
         Optional<Contract> contract = repository.findById(contractId);
         ContractDto contractDto = null;
         if (contract.isPresent()) {
-            contractDto = convertToDto(contract.get());
+            contractDto = convertContractEntityToDto(contract.get(),modelMapper);
         }
         return contractDto;
     }
@@ -58,7 +51,7 @@ public class LeaseContractService {
                     existingContract.setMonthlyRate(contract.getMonthlyRate());
                     return repository.save(existingContract);
                 })
-                .orElseGet(() -> repository.save(convertToEntity(contract)));
-        return convertToDto(updatedContract);
+                .orElseGet(() -> repository.save(convertContractDtoToEntity(contract,modelMapper)));
+        return convertContractEntityToDto(updatedContract,modelMapper);
     }
 }

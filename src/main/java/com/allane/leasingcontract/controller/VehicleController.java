@@ -45,8 +45,8 @@ public class VehicleController {
     }
 
     @PutMapping("vehicles/{id}")
-    ResponseEntity updateVehicle(@PathVariable(name = "id") @NotNull long vehicleId, @RequestBody @Valid final Vehicle vehicle) {
-        VehicleDto updatedContract = vehicleService.updateVehicle(vehicleId, vehicle);
+    ResponseEntity updateVehicle(@PathVariable(name = "id") @NotNull long vehicleId, @RequestBody @Valid final VehicleDto vehicleDto) {
+        VehicleDto updatedContract = vehicleService.updateVehicle(vehicleId, vehicleDto);
         return new ResponseEntity<>(updatedContract, HttpStatus.OK);
     }
 
