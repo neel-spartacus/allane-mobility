@@ -12,6 +12,7 @@ Pre-conditions:
 5)OpenApi Swagger
 6)Mysql
 7)Docker
+8)Flyway
 
 **Building the project:**
 
@@ -20,6 +21,9 @@ Pre-conditions:
 **To run the application:
 
 ./gradlew bootrun
+
+
+Swagger UI: http://localhost:8080/swagger-ui.html
 
 Install a docker engine.I used Docker for Windows: https://docs.docker.com/engine/install/
 
@@ -39,3 +43,43 @@ Password: my-secret-pw
 
 Type show databases and you can see a database name allane along with others.
 
+
+Sample payloads:
+
+Vehicle:
+
+{
+"brand": "BMW",
+"model": "X5",
+"modelYear": 2020,
+"vin":null,
+"price": 45000
+}
+
+Customer:
+
+{
+"firstName": "Indranil",
+"lastName": "Dey",
+"birthDate": "1990-04-20"
+}
+
+Contract:
+
+{
+"monthlyRate": 200,
+"customer": {
+"id": 2,
+"firstName": "Indranil",
+"lastName": "Dey",
+"birthDate": "2000-04-20"
+},
+"vehicle": {
+"id": 3,
+"brand": "Audi",
+"model": "A5",
+"modelYear": 2021,
+"vin": null,
+"price": 65000
+}
+}
