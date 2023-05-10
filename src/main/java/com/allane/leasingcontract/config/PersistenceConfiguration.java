@@ -64,9 +64,10 @@ public class PersistenceConfiguration {
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

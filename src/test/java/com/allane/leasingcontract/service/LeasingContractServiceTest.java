@@ -8,9 +8,7 @@ import com.allane.leasingcontract.model.Contract;
 import com.allane.leasingcontract.model.Customer;
 import com.allane.leasingcontract.model.Vehicle;
 import com.allane.leasingcontract.repository.ContractRepository;
-import com.allane.leasingcontract.repository.VehicleRepository;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,17 +36,12 @@ public class LeasingContractServiceTest {
     @InjectMocks
     private LeaseContractService service;
 
-    @Before
-    public void setup() {
-
-    }
-
 
     @Test
     public void shouldAddContract() {
         //Given
         ContractDto contractDto = prepareContractDto();
-        Contract contract= prepareContract();
+        Contract contract = prepareContract();
 
         Mockito.when(modelMapper.map(any(ContractDto.class), eq(Contract.class))).thenReturn(contract);
 
@@ -65,9 +58,9 @@ public class LeasingContractServiceTest {
     public void shouldReturnContract() {
 
         //Given
-        Long contractNo = 1L;
+        long contractNo = 1L;
         ContractDto contractDto = prepareContractDto();
-        Contract contract= prepareContract();
+        Contract contract = prepareContract();
         Mockito.when(repository.findById(any(Long.class))).thenReturn(Optional.of(contract));
         Mockito.when(modelMapper.map(any(Contract.class), eq(ContractDto.class))).thenReturn(contractDto);
 
@@ -84,17 +77,17 @@ public class LeasingContractServiceTest {
     public void shouldUpdateContract() {
 
         //Given
-        Long contractNo = 1L;
+        long contractNo = 1L;
         ContractDto contractDto = prepareContractDto();
         contractDto.getVehicle().setVin("X123456");
-        Contract contract= prepareContract();
+        Contract contract = prepareContract();
         Mockito.when(repository.findById(any(Long.class))).thenReturn(Optional.of(contract));
         Mockito.when(repository.save(any(Contract.class))).thenReturn(contract);
         Mockito.when(modelMapper.map(any(Contract.class), eq(ContractDto.class))).thenReturn(contractDto);
 
 
         //When
-        ContractDto responseContractDto = service.updateContract(contractNo,contractDto);
+        ContractDto responseContractDto = service.updateContract(contractNo, contractDto);
 
         Assert.assertTrue(responseContractDto.getContractNo() == 1L);
         Assert.assertTrue(responseContractDto.getVehicle().getVin().equals("X123456"));
@@ -104,7 +97,7 @@ public class LeasingContractServiceTest {
     @Test
     public void shouldDeleteContract() {
         //Given
-        Long contractNo = 1L;
+        long contractNo = 1L;
 
         //When
         service.deleteContract(contractNo);
@@ -114,18 +107,17 @@ public class LeasingContractServiceTest {
     }
 
 
-    private Contract prepareContract(){
+    private Contract prepareContract() {
 
         Customer customer = Customer.builder().id(1L).firstName("Jon").lastName("Doe")
                 .birthDate(LocalDate.of(2000, 04, 9)).build();
         Vehicle vehicle = Vehicle.builder().id(1L).brand("BMW").model("X5")
                 .modelYear(2020).price(50000.00).build();
-        Contract contract= Contract.builder().contractNo(1l).vehicle(vehicle).customer(customer).build();
 
-        return contract;
+        return Contract.builder().contractNo(1L).vehicle(vehicle).customer(customer).build();
     }
 
-    private ContractDto prepareContractDto(){
+    private ContractDto prepareContractDto() {
 
         CustomerDto customerDto = CustomerDto.builder().id(1L).firstName("Jon").lastName("Doe")
                 .birthDate("2000-04-09").build();
@@ -134,11 +126,8 @@ public class LeasingContractServiceTest {
                 .modelYear(2020).price(50000.00).build();
 
 
-        ContractDto contractDto = ContractDto.builder().contractNo(1L).monthlyRate(200).customer(customerDto)
+        return ContractDto.builder().contractNo(1L).monthlyRate(200).customer(customerDto)
                 .vehicle(vehicleDto).build();
-
-
-        return contractDto;
     }
 
 }

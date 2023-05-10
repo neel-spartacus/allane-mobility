@@ -1,25 +1,24 @@
 package com.allane.leasingcontract.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Entity
 @Table(name = "vehicle")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Vehicle {
 
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy = GenerationType.AUTO,
+            generator = "native"
     )
     @GenericGenerator(
             name = "native",
@@ -45,66 +44,7 @@ public class Vehicle {
     @NotNull
     private Double price;
 
-    @OneToOne(mappedBy = "vehicle",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Contract contract;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Integer getModelYear() {
-        return modelYear;
-    }
-
-    public void setModelYear(Integer modelYear) {
-        this.modelYear = modelYear;
-    }
-
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public void setContract(Contract contract) {
-        if(Objects.nonNull(contract) && Objects.nonNull(contract.getVehicle())){
-            this.id=contract.getVehicle().getId();
-        }
-        this.contract = contract;
-
-    }
-
-    public Contract getContract() {
-        return contract;
-    }
 }

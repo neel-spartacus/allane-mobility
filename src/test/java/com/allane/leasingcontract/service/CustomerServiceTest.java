@@ -5,7 +5,6 @@ import com.allane.leasingcontract.dto.CustomerDto;
 import com.allane.leasingcontract.model.Customer;
 import com.allane.leasingcontract.repository.CustomerRepository;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,11 +32,6 @@ public class CustomerServiceTest {
     @InjectMocks
     private CustomerService service;
 
-    @Before
-    public void setup() {
-
-    }
-
 
     @Test
     public void shouldAddCustomer() {
@@ -63,7 +57,7 @@ public class CustomerServiceTest {
     public void shouldReturnCustomer() {
 
         //Given
-        Long customerId = 1L;
+        long customerId = 1L;
 
         CustomerDto customerDto = CustomerDto.builder().id(1L).firstName("Jon").lastName("Doe")
                 .birthDate("2000-04-09").build();
@@ -78,8 +72,8 @@ public class CustomerServiceTest {
         //When
         CustomerDto responseCustomerDto = service.getCustomerByID(customerId);
 
-        Assert.assertTrue(responseCustomerDto.getId() == 1L);
-        Assert.assertTrue(responseCustomerDto.getFirstName().equals("Jon"));
+        Assert.assertEquals(1,responseCustomerDto.getId().longValue());
+        Assert.assertEquals("Jon",responseCustomerDto.getFirstName());
 
     }
 
@@ -87,7 +81,7 @@ public class CustomerServiceTest {
     public void shouldUpdateCustomer() {
 
         //Given
-        Long customerId = 1L;
+        long customerId = 1L;
 
         Customer customer = Customer.builder().id(customerId).firstName("Jon").lastName("Doe")
                 .birthDate(LocalDate.of(2000, 8, 10)).build();
@@ -110,7 +104,7 @@ public class CustomerServiceTest {
     @Test
     public void shouldDeleteCustomer() {
         //Given
-        Long customerId = 1L;
+        long customerId = 1L;
 
         //When
         service.deleteCustomer(customerId);

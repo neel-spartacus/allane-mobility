@@ -1,14 +1,10 @@
 package com.allane.leasingcontract.service;
 
 
-import com.allane.leasingcontract.dto.CustomerDto;
 import com.allane.leasingcontract.dto.VehicleDto;
-import com.allane.leasingcontract.model.Customer;
 import com.allane.leasingcontract.model.Vehicle;
-import com.allane.leasingcontract.repository.CustomerRepository;
 import com.allane.leasingcontract.repository.VehicleRepository;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -35,11 +30,6 @@ public class VehicleServiceTest {
 
     @InjectMocks
     private VehicleService service;
-
-    @Before
-    public void setup() {
-
-    }
 
 
     @Test
@@ -66,7 +56,7 @@ public class VehicleServiceTest {
     public void shouldReturnVehicle() {
 
         //Given
-        Long vehicleId = 1L;
+        long vehicleId = 1L;
 
         //Given
         VehicleDto vehicleDto = VehicleDto.builder().id(1L).brand("BMW").model("X5")
@@ -91,7 +81,7 @@ public class VehicleServiceTest {
     public void shouldUpdateVehicle() {
 
         //Given
-        Long vehicleId = 1L;
+        long vehicleId = 1L;
 
         VehicleDto vehicleDto = VehicleDto.builder().id(1L).brand("BMW").model("X5")
                 .modelYear(2020).price(50000.00).vin("X123456").build();
@@ -105,7 +95,7 @@ public class VehicleServiceTest {
 
 
         //When
-        VehicleDto responseVehicleDto = service.updateVehicle(vehicleId,vehicleDto);
+        VehicleDto responseVehicleDto = service.updateVehicle(vehicleId, vehicleDto);
 
         Assert.assertTrue(responseVehicleDto.getId() == 1L);
         Assert.assertTrue(responseVehicleDto.getVin().equals("X123456"));
@@ -115,7 +105,7 @@ public class VehicleServiceTest {
     @Test
     public void shouldDeleteVehicle() {
         //Given
-        Long vehicleId = 1L;
+        long vehicleId = 1L;
 
         //When
         service.deleteVehicle(vehicleId);
