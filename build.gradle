@@ -1,9 +1,9 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.11'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "org.flywaydb.flyway" version "9.8.1"
-	id "org.springdoc.openapi-gradle-plugin" version "1.6.0"
+    id 'java'
+    id 'org.springframework.boot' version '2.7.11'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.flywaydb.flyway' version '9.8.1'
+    id 'org.springdoc.openapi-gradle-plugin' version '1.6.0'
 }
 
 group = 'com.allane.leasingcontract'
@@ -11,45 +11,45 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.flywaydb:flyway-mysql'
-	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.15'
-	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
-	implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
-	testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.9.3'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'mysql:mysql-connector-java:5.1.47'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.15'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.9.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java:5.1.47'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 
 flyway {
-	driver='com.mysql.jdbc.Driver'
-	url = 'jdbc:mysql://localhost:3306/allane'
-	baselineOnMigrate = true
-	locations = [
-			// Add this when Java-based migrations are used
-			'classpath:db/migration'
-	]
+    driver = 'com.mysql.jdbc.Driver'
+    url = 'jdbc:mysql://localhost:3306/allane'
+    baselineOnMigrate = true
+    locations = [
+            // Add this when Java-based migrations are used
+            'classpath:db/migration'
+    ]
 }
 
 test {
-	jvmArgs '--enable-preview'
-	useJUnitPlatform()
+    jvmArgs '--enable-preview'
+    useJUnitPlatform()
 }
