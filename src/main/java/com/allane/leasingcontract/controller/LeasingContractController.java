@@ -19,34 +19,32 @@ public class LeasingContractController {
     private LeaseContractService leaseContractService;
 
     @PostMapping("contract")
-    ResponseEntity<?> createContract(@RequestBody @Valid ContractDto contract) {
-
+    ResponseEntity<ContractDto> createContract(@RequestBody @Valid ContractDto contract) {
         leaseContractService.createContract(contract);
-        return new ResponseEntity<>("Contract created", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(contract);
     }
 
     @GetMapping("contracts/{id}")
-    ResponseEntity<?> getContract(@PathVariable(name = "id") long contractId) {
+    ResponseEntity<ContractDto> getContract(@PathVariable(name = "id") long contractId) {
         ContractDto contract = leaseContractService.getContractById(contractId);
-        return contract != null ? new ResponseEntity<>(contract, HttpStatus.OK) :
-                new ResponseEntity<>("No contract found for the given id " + contractId, HttpStatus.NOT_FOUND);
+        return contract != null ? ResponseEntity.ok(contract) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("contracts/{id}")
-    ResponseEntity<?> deleteContract(@PathVariable(name = "id") long contractId) {
+    ResponseEntity<Void> deleteContract(@PathVariable(name = "id") long contractId) {
         ContractDto contract = leaseContractService.getContractById(contractId);
         if (Objects.nonNull(contract)) {
             leaseContractService.deleteContract(contractId);
-            return new ResponseEntity<>("Contract deleted with id " + contractId, HttpStatus.OK);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>("No contract found with id " + contractId, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("contracts/{id}")
-    ResponseEntity<?> updateContract(@PathVariable(name = "id") @NotNull long contractId, @RequestBody @Valid ContractDto contractDto) {
+    ResponseEntity<ContractDto> updateContract(@PathVariable(name = "id") @NotNull long contractId, @RequestBody @Valid ContractDto contractDto) {
         ContractDto updatedContract = leaseContractService.updateContract(contractId, contractDto);
-        return new ResponseEntity<>(updatedContract, HttpStatus.OK);
+        return ResponseEntity.ok(updatedContract);
     }
 
 

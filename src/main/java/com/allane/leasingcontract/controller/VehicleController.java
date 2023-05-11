@@ -18,34 +18,32 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @PostMapping("vehicle")
-    ResponseEntity<?> addVehicle(@RequestBody @Valid VehicleDto vehicleDto) {
-
+    ResponseEntity<VehicleDto> addVehicle(@RequestBody @Valid VehicleDto vehicleDto) {
         vehicleService.addVehicle(vehicleDto);
-        return new ResponseEntity<>("Vehicle added", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehicleDto);
     }
 
     @GetMapping("vehicles/{id}")
     ResponseEntity<?> getContract(@PathVariable(name = "id") long vehicleId) {
         VehicleDto vehicleDto = vehicleService.getVehicleById(vehicleId);
-        return vehicleDto != null ? new ResponseEntity<>(vehicleDto, HttpStatus.OK) :
-                new ResponseEntity<>("No vehicle found for the given id " + vehicleId, HttpStatus.NOT_FOUND);
+        return vehicleDto != null ? ResponseEntity.ok(vehicleDto) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("vehicles/{id}")
-    ResponseEntity<?> deleteVehicle(@PathVariable(name = "id") long vehicleId) {
+    ResponseEntity<Void> deleteVehicle(@PathVariable(name = "id") long vehicleId) {
         VehicleDto vehicleDto = vehicleService.getVehicleById(vehicleId);
         if (Objects.nonNull(vehicleDto)) {
             vehicleService.deleteVehicle(vehicleId);
-            return new ResponseEntity<>("Vehicle deleted with id " + vehicleId, HttpStatus.OK);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>("No vehicle found with id " + vehicleId, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("vehicles/{id}")
-    ResponseEntity<?> updateVehicle(@PathVariable(name = "id") @NotNull long vehicleId, @RequestBody @Valid final VehicleDto vehicleDto) {
-        VehicleDto updatedContract = vehicleService.updateVehicle(vehicleId, vehicleDto);
-        return new ResponseEntity<>(updatedContract, HttpStatus.OK);
+    ResponseEntity<VehicleDto> updateVehicle(@PathVariable(name = "id") @NotNull long vehicleId, @RequestBody @Valid final VehicleDto vehicleDto) {
+        VehicleDto updateVehicle = vehicleService.updateVehicle(vehicleId, vehicleDto);
+        return ResponseEntity.ok(updateVehicle);
     }
 
 

@@ -18,31 +18,31 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping("customer")
-    ResponseEntity<?> addCustomer(@RequestBody @Valid CustomerDto customerDto) {
+    ResponseEntity<CustomerDto> addCustomer(@RequestBody @Valid CustomerDto customerDto) {
         customerService.addCustomer(customerDto);
-        return new ResponseEntity<>("Customer added", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerDto);
     }
 
     @GetMapping("customers/{id}")
-    ResponseEntity<?> getContract(@PathVariable(name = "id") long customerId) {
+    ResponseEntity<CustomerDto> getContract(@PathVariable(name = "id") long customerId) {
         CustomerDto customerDto = customerService.getCustomerByID(customerId);
-        return customerDto != null ? new ResponseEntity<>(customerDto, HttpStatus.OK) : new ResponseEntity<>("No Customer found for the given id " + customerId, HttpStatus.NOT_FOUND);
+        return customerDto != null ? ResponseEntity.ok(customerDto) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("customers/{id}")
-    ResponseEntity<?> deleteVehicle(@PathVariable(name = "id") long customerId) {
+    ResponseEntity<Void> deleteVehicle(@PathVariable(name = "id") long customerId) {
         CustomerDto customerDto = customerService.getCustomerByID(customerId);
         if (Objects.nonNull(customerDto)) {
             customerService.deleteCustomer(customerId);
-            return new ResponseEntity<>("Customer deleted with id " + customerId, HttpStatus.OK);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>("No customer found with id " + customerId, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("customers/{id}")
-    ResponseEntity<?> updateCustomer(@PathVariable(name = "id") @NotNull long customerId, @RequestBody @Valid CustomerDto customerDto) {
+    ResponseEntity<CustomerDto> updateCustomer(@PathVariable(name = "id") @NotNull long customerId, @RequestBody @Valid CustomerDto customerDto) {
         CustomerDto updatedCustomer = customerService.updateCustomer(customerId, customerDto);
-        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+        return ResponseEntity.ok(updatedCustomer);
     }
 }
